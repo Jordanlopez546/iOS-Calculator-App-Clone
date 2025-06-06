@@ -11,6 +11,7 @@ import {
 export default function App() {
   const [input, setInput] = useState("0");
   const [result, setResult] = useState("");
+  const [prevInput, setPrevInput] = useState("");
 
   const handleButtonPress = (value) => {
     if (input === "0" || input === result) {
@@ -32,6 +33,7 @@ export default function App() {
 
   const handleEqualPress = () => {
     try {
+      setPrevInput(input)
       setResult(eval(input).toString());
       setInput(eval(input).toString());
     } catch (error) {
@@ -48,14 +50,20 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.displayContainer}>
         {result ? (
-          <Text style={[styles.displayText, { fontSize: 77, marginTop: -10 }]}>
+          <>
+            <Text style={[styles.displayText, { fontSize: 50, marginTop: -10, marginBottom: 10 }]}>
+            {prevInput} =
+            </Text>
+            <Text style={[styles.displayText, { fontSize: 77}]}>
             {result}
-          </Text>
+            </Text>
+          </>
         ) : (
           <Text style={[styles.displayText, { fontSize: 77, marginTop: -10 }]}>
             {input}
           </Text>
         )}
+
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.row}>
@@ -68,7 +76,7 @@ export default function App() {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: "#CCCCCC" }]}
           >
-            <Text style={[styles.buttonText, { color: "black" }]}></Text>
+            <Text style={[styles.buttonText, { color: "black" }]}>🙂</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleOperatorPress("%")}
@@ -215,7 +223,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 25,
   },
   button: {
     width: 75,
@@ -231,6 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#333337",
     justifyContent: "center",
+    alignItems: "center",
     padding: 15,
   },
   buttonEqual: {
